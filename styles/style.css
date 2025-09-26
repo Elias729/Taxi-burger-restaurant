@@ -1,0 +1,12 @@
+ * {
+     font-family: "Mooli", sans-serif;
+ }
+
+ .bg-art {
+     background: linear-gradient(rgba(255, 252, 252, 0.884),
+             rgba(255, 252, 252)),
+         url("../assets/bg.png");
+     background-size: 400px;
+     background-position: center;
+     background-attachment: fixed;
+ }
