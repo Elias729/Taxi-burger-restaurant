@@ -20,6 +20,59 @@ const loadRandomData = () => {
         .then(data => displayFoods(data.foods));
 }
 
+/* Modal Open  */
+
+const loadFoodDetails = (id) => {
+    const url = `https://taxi-kitchen-api.vercel.app/api/v1/foods/${id}`;
+
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => displayDetails(data.details));
+};
+
+const displayDetails = (food) => {
+    const detailsContainer = document.getElementById("details_container");
+    detailsContainer.innerHTML = "";
+
+    const ecode = food.video.split("v=")[1] || food.video.split("/").pop();
+    console.log("Video code:", ecode);
+
+    detailsContainer.innerHTML = `
+   <img src="${food.foodImg}" 
+       alt="${food.title}" 
+       class="w-full h-64 object-cover rounded-xl mb-6 shadow-md">
+  
+  <h2 class="text-3xl font-bold text-gray-900 mb-2">
+    ${food.title}
+  </h2>
+  
+  <p class="text-gray-600 mb-4">
+    Category: <span class="font-semibold">${food.category}</span> | 
+    Origin: <span class="font-semibold">${food.area}</span>
+  </p>
+  
+  <p class="text-xl font-semibold text-indigo-600 mb-6">
+    Price: $${food.price}
+  </p>
+
+  <div class="aspect-video rounded-xl overflow-hidden shadow-lg mb-6">
+    <iframe 
+      src="https://www.youtube.com/embed/${food.video.split("v=")[1]}"
+      class="w-full h-full"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <p class="text-sm text-gray-500">
+  Published: ${food.send_at ? new Date(food.send_at).toLocaleDateString() : "N/A"}
+</p>
+
+  `;
+
+    document.getElementById("my_modal_5").showModal();
+};
+
+
 const displayFoods = (foods) => {
     const foodsContainer = document.getElementById("food-container");
     foodsContainer.innerHTML = "";
@@ -27,7 +80,7 @@ const displayFoods = (foods) => {
     for (let food of foods) {
         const foodCard = document.createElement('div');
         foodCard.innerHTML = `
-                <div class="p-5 bg-white flex flex-col gap-4 shadow-md rounded-2xl transition hover:shadow-lg">
+                <div onclick="loadFoodDetails(${food.id})" class="p-5 bg-white flex flex-col gap-4 shadow-md rounded-2xl transition hover:shadow-lg">
           <img src=${food.foodImg} alt=""
             class="w-full rounded-xl h-48 object-cover" />
           <div class="flex flex-col gap-2">
