@@ -31,55 +31,77 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body class="bg-art">
-  <header class="flex flex-col gap-5 justify-center items-center min-h-screen">
-    <div class="">
-      <img src="./assets/logo.png" alt="" class="w-[450px]" />
+<body>
+
+  <!-- * Bg Video -->
+
+  <video class="background-video" autoplay muted loop playsinline>
+    <source src="/assets/5223106-hd_1920_1080_25fps.mp4" type="video/mp4" />
+  </video>
+  <div class="video-overlay"></div>
+
+
+  <header class="flex flex-col gap-6 justify-center items-center min-h-screen text-white relative z-10">
+    <div>
+      <img src="./assets/logo.png" alt="" class="w-[300px] md:w-[450px]" />
     </div>
 
     <div
-      class="w-20 h-20 flex items-center justify-center animate-bounce bg-[#FEBF00] mt-10 rounded-full shadow-xl justify-self-end">
+      class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center animate-bounce bg-[#FEBF00] mt-8 rounded-full shadow-xl">
       <i class="fa-solid fa-arrow-down text-xl"></i>
     </div>
-    <h1 class="w-full sticky bottom-0 text-center text-xl font-bold p-4 bg-[#FEBF00] rounded">
+
+    <h1 class="mt-8 text-center text-lg md:text-xl font-bold px-4 py-2 bg-[#FEBF00] rounded shadow-md">
       Digital Menu Card For Our Lovely Customer
     </h1>
   </header>
 
+
   <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8 w-11/12 mx-auto min-h-screen py-6">
-    <!-- Categories -->
-    <section class="bg-[#FEBF00] lg:col-span-2 rounded-2xl p-5 shadow-sm">
-      <h1 class="text-xl font-bold text-center bg-white py-2 rounded-xl">
+    <!-- * Categories -->
+    <section class="bg-[#FEBF00] lg:col-span-2 rounded-2xl p-5 shadow-md">
+      <!-- * Title -->
+      <h1 class="text-xl font-bold text-center bg-white py-3 rounded-xl shadow-sm">
         Categories
       </h1>
-      <div class="divider my-3"></div>
-      <!-- categories  -->
+
+      <!-- * Divider -->
+      <div class="my-4 w-2/3 mx-auto border-t-2 border-white/80"></div>
+
+      <!-- * Category Buttons -->
       <div class="flex flex-col gap-3" id="category-container">
-        <button class="btn btn-block shadow-sm btn-category flex items-center gap-3 justify-start">
+        <button
+          class="btn btn-block bg-white hover:bg-yellow-100 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-2">
           <img src="https://www.themealdb.com/images/category/beef.png" alt=""
-            class="w-10 h-10 object-cover rounded-full" />
-          <span class="font-medium">SeaFood</span>
+            class="w-10 h-10 object-cover rounded-full border border-gray-200 shadow" />
+          <span class="font-semibold text-gray-700">SeaFood</span>
         </button>
-        <button class="btn btn-block shadow-sm btn-category flex items-center gap-3 justify-start">
+
+        <button
+          class="btn btn-block bg-white hover:bg-yellow-100 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-2">
           <img src="https://www.themealdb.com/images/category/beef.png" alt=""
-            class="w-10 h-10 object-cover rounded-full" />
-          <span class="font-medium">Chicken</span>
+            class="w-10 h-10 object-cover rounded-full border border-gray-200 shadow" />
+          <span class="font-semibold text-gray-700">Chicken</span>
         </button>
-        <button class="btn btn-block shadow-sm btn-category flex items-center gap-3 justify-start">
+
+        <button
+          class="btn btn-block bg-white hover:bg-yellow-100 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-2">
           <img src="https://www.themealdb.com/images/category/beef.png" alt=""
-            class="w-10 h-10 object-cover rounded-full" />
-          <span class="font-medium">Beef</span>
+            class="w-10 h-10 object-cover rounded-full border border-gray-200 shadow" />
+          <span class="font-semibold text-gray-700">Beef</span>
         </button>
       </div>
     </section>
 
-    <!-- Foods -->
+
+    <!--  * Foods -->
     <section class="lg:col-span-7 p-5">
-      <h1 class="text-2xl font-bold text-center">Our Foods</h1>
-      <div class="divider my-4"></div>
+      <h1 class="text-2xl font-bold text-center text-white">Our Foods</h1>
+      <div class="my-4 w-2/3 mx-auto border-t-2 border-white"></div>
+
 
       <div id="food-container" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <!-- sample card  -->
+        <!-- * sample card  -->
         <div class="p-5 bg-white flex flex-col gap-4 shadow-md rounded-2xl transition hover:shadow-lg">
           <img src="https://www.themealdb.com/images/media/meals/1520081754.jpg" alt=""
             class="w-full rounded-xl h-48 object-cover" />
@@ -100,12 +122,12 @@
       </div>
     </section>
 
-    <!-- Cart -->
+    <!-- * Cart -->
     <section class="lg:col-span-3 p-5 bg-white border-[#FEBF00] border-2 rounded-2xl shadow-sm">
       <h1 class="text-2xl font-bold text-center">Cart</h1>
       <div class="divider my-4"></div>
       <div class="flex flex-col gap-4" id="cart-container">
-        <!-- sample cart  -->
+        <!-- * sample cart  -->
         <div class="p-3 bg-gray-50 flex items-center gap-3 shadow-sm rounded-xl relative">
           <img src="https://www.themealdb.com/images/media/meals/1520081754.jpg" alt=""
             class="w-12 h-12 rounded-lg object-cover" />
@@ -131,6 +153,10 @@
       </div>
     </section>
   </main>
+
+  <!-- * JavaScript Link -->
+
+  <script src="scripts/taxi.js"></script>
 
 </body>
 

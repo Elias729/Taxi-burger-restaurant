@@ -1,12 +1,40 @@
- * {
-     font-family: "Mooli", sans-serif;
- }
+/** Font Family **/
+* {
+    font-family: "Mooli", sans-serif;
+}
 
- .bg-art {
-     background: linear-gradient(rgba(255, 252, 252, 0.884),
-             rgba(255, 252, 252)),
-         url("../assets/bg.png");
-     background-size: 400px;
-     background-position: center;
-     background-attachment: fixed;
- }
+/** Scrollbar Hidden  **/
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/** Background Video Style  **/
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
