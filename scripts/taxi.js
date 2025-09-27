@@ -13,6 +13,13 @@ const handelLOad = (id) => {
         .then(data => displayFoods(data.foods));
 }
 
+const loadRandomData = () => {
+    const url = " https://taxi-kitchen-api.vercel.app/api/v1/foods/random";
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayFoods(data.foods));
+}
+
 const displayFoods = (foods) => {
     const foodsContainer = document.getElementById("food-container");
     foodsContainer.innerHTML = "";
@@ -64,4 +71,5 @@ const displayCategories = (categories) => {
 
 };
 
-loadCategories()
+loadCategories();
+loadRandomData();
