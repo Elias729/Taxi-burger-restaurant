@@ -42,11 +42,11 @@ const displayDetails = (food) => {
        alt="${food.title}" 
        class="w-full h-64 object-cover rounded-xl mb-6 shadow-md">
   
-  <h2 class="text-3xl font-bold text-gray-900 mb-2">
+  <h2 class="text-3xl font-bold text-white mb-2">
     ${food.title}
   </h2>
   
-  <p class="text-gray-600 mb-4">
+  <p class="text-white mb-4">
     Category: <span class="font-semibold">${food.category}</span> | 
     Origin: <span class="font-semibold">${food.area}</span>
   </p>
@@ -98,21 +98,31 @@ const displayFoods = (foods) => {
     for (let food of foods) {
         const foodCard = document.createElement('div');
         foodCard.innerHTML = `
-                <div class="p-5 bg-white flex flex-col gap-4 shadow-md rounded-2xl transition hover:shadow-lg">
-          <img onclick="loadFoodDetails(${food.id})" src=${food.foodImg} alt=""
-            class="w-full rounded-xl h-48 object-cover" />
-          <div class="flex flex-col gap-2">
-            <h1 class="text-lg font-bold">${food.title} </h1>
-            <div class="badge badge-warning w-fit">${food.category}</div>
-            <h2 class="text-yellow-600 font-semibold text-lg">
-              $ <span class="price">${food.price}</span> BDT
-            </h2>
-            <button class="btn btn-warning w-full mt-2 flex items-center gap-2 justify-center">
-              <i class="fa-solid fa-square-plus"></i>
-              Add This Item
-            </button>
-          </div>
-        </div>
+              <div class="p-5 rounded-2xl shadow-2xl backdrop-blur-sm bg-black/70 border border-gray-800 transition-transform transform hover:scale-105 duration-300">
+  <img onclick="loadFoodDetails(${food.id})" 
+    src="${food.foodImg}" 
+    alt="${food.title}" 
+    class="w-full h-48 rounded-xl object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
+  />
+  
+  <div class="flex flex-col gap-3 mt-4">
+    <h1 class="text-lg md:text-xl font-bold text-gray-100 truncate">${food.title}</h1>
+    
+    <div class="inline-block bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-semibold w-fit">
+      ${food.category}
+    </div>
+    
+    <h2 class="text-yellow-400 font-semibold text-lg md:text-xl">
+      $<span class="price">${food.price}</span> BDT
+    </h2>
+    
+    <button class="btn btn-warning w-full mt-2 flex items-center gap-2 justify-center hover:scale-105 transition-transform duration-300">
+      <i class="fa-solid fa-square-plus"></i>
+      Add This Item
+    </button>
+  </div>
+</div>
+
         `;
 
         foodsContainer.appendChild(foodCard);
@@ -130,7 +140,7 @@ const displayCategories = (categories) => {
         const categoriesCard = document.createElement('div');
         categoriesCard.innerHTML = `
          <button onclick="handelLOad(${category.id})"
-          class="btn btn-block bg-white hover:bg-yellow-100 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-6">
+          class="btn btn-block bg-white hover:bg-gray-300 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-6">
           <img src=${category.categoryImg} alt=""
             class="w-10 h-10 object-cover rounded-full border border-gray-200 shadow" />
           <span class="font-semibold text-gray-700">${category.categoryName}</span>
