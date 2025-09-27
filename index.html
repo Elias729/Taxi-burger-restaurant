@@ -47,8 +47,8 @@
     </div>
 
     <div
-      class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center animate-bounce bg-[#FEBF00] mt-8 rounded-full shadow-xl">
-      <i class="fa-solid fa-arrow-down text-xl"></i>
+      class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center animate-bounce bg-[#FEBF00] mt-8 rounded-full shadow-xl cursor-pointer">
+      <a href="#mainSection"><i class="fa-solid fa-arrow-down text-xl"></i></a>
     </div>
 
     <h1 class="mt-8 text-center text-lg md:text-xl font-bold px-4 py-2 bg-[#FEBF00] rounded shadow-md">
@@ -57,7 +57,7 @@
   </header>
 
 
-  <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8 w-11/12 mx-auto min-h-screen py-6">
+  <main id="mainSection" class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8 w-11/12 mx-auto min-h-screen py-6">
     <!-- * Categories -->
     <section class="bg-[#FEBF00] lg:col-span-2 rounded-2xl p-5 shadow-md">
       <!-- * Title -->
@@ -126,9 +126,11 @@
       <div id="details_container" class="space-y-8">
 
       </div>
+      <p id="currentDateTime" class="text-sm bg-[#47698F] text-white border-[#35567b] text-center rounded-2xl py-2"></p>
       <div class="modal-action">
         <form method="dialog">
-          <button class="btn">Close</button>
+          <button
+            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 focus:outline-hidden focus:bg-red-600 disabled:opacity-50 disabled:pointer-events-none cursor-pointer">Close</button>
         </form>
       </div>
     </div>

@@ -62,15 +62,33 @@ const displayDetails = (food) => {
       allowfullscreen>
     </iframe>
   </div>
-
-  <p class="text-sm text-gray-500">
-  Published: ${food.send_at ? new Date(food.send_at).toLocaleDateString() : "N/A"}
-</p>
-
   `;
 
     document.getElementById("my_modal_5").showModal();
 };
+
+
+/* Time update */
+
+const updateCurrentDateTime = () => {
+    const now = new Date();
+
+    const formatted = now.toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        }) + " - " +
+
+        now.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+    document.getElementById('currentDateTime').textContent = `Viewed On: ${formatted}`;
+};
+
+updateCurrentDateTime();
+setInterval(updateCurrentDateTime, 1000);
 
 
 const displayFoods = (foods) => {
