@@ -80,8 +80,8 @@ const displayFoods = (foods) => {
     for (let food of foods) {
         const foodCard = document.createElement('div');
         foodCard.innerHTML = `
-                <div onclick="loadFoodDetails(${food.id})" class="p-5 bg-white flex flex-col gap-4 shadow-md rounded-2xl transition hover:shadow-lg">
-          <img src=${food.foodImg} alt=""
+                <div class="p-5 bg-white flex flex-col gap-4 shadow-md rounded-2xl transition hover:shadow-lg">
+          <img onclick="loadFoodDetails(${food.id})" src=${food.foodImg} alt=""
             class="w-full rounded-xl h-48 object-cover" />
           <div class="flex flex-col gap-2">
             <h1 class="text-lg font-bold">${food.title} </h1>
