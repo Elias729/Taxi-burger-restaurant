@@ -186,31 +186,33 @@ loadCategories();
 loadRandomData();
 
 const addtoCart = (btn) => {
-  const card = btn.parentNode.parentNode;
+  const card = btn.closest(".p-5");
 
   const foodTitle = card.querySelector(".food-title").innerText;
   const foodImg = card.querySelector(".food-img").src;
-  const foodPrice = card.querySelector(".food-price").innerText;
+  const foodPrice = Number(card.querySelector(".food-price").innerText);
 
-  const foodPriceNum = Number(foodPrice);
+  const existingItem = cart.find(item => item.foodTitle === foodTitle);
 
-  // console.log(foodTitle, foodImg, foodPriceNum);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      id: Date.now(),
+      quantity: 1,
+      foodTitle,
+      foodImg,
+      foodPrice
+    });
+  }
 
-  const selectedItem = {
-    id: card.length + 1,
-    quantity: 1,
-    foodTitle: foodTitle,
-    foodImg: foodImg,
-    foodPrice: foodPriceNum,
-  };
+  total = cart.reduce((sum, item) => sum + item.foodPrice * item.quantity, 0);
 
-  cart.push(selectedItem);
-
-  total = total + foodPriceNum;
-
-  displayCart(cart)
+  displayCart(cart);
   displayTotal(total);
-}
+};
+
+
 
 const displayTotal = (val) => {
   document.getElementById("cart-total").innerHTML = val;
@@ -222,38 +224,104 @@ const displayTotal = (val) => {
 const displayCart = (cart) => {
   const cartContainer = document.getElementById("cart-container");
   cartContainer.innerHTML = "";
+
   for (let item of cart) {
     const newItem = document.createElement("div");
     newItem.innerHTML = `
-     <div class="p-1 bg-white flex gap-3 shadow rounded-xl relative">
-            <div class="img">
-              <span class="hidden cart-id">${item.id}</span>
-              <img
-                src="${item.foodImg}"
-                alt=""
-                class="w-[50px] rounded-xl h-[50px] object-cover"
-              />
-            </div>
-            <div class="flex-1">
-              <h1  class="text-xs font-bold food-title">
-                ${item.foodTitle}
-              </h1>
+    <div class="relative flex items-center gap-4 
+            bg-gradient-to-r from-white/30 via-white/20 to-white/10 
+            backdrop-blur-xl rounded-3xl p-4 shadow-lg border border-white/30">
 
-              <div class="">
-                <h2 class="text-yellow-600 font-semibold">
-                 ${item.quantity} x $ <span class="item-price">${item.foodPrice}</span> BDT
-                </h2>
-                
-              </div>
-            </div>
-            <div onclick="removeCart(this)"
-              class="w-6 h-6 flex justify-center items-center bg-red-600 rounded-full absolute -top-1 -right-1 text-white cursor-pointer"
-            >
-              <i class="fa-solid fa-xmark"></i>
-            </div>
-          </div>
+  <div class="flex-shrink-0">
+    <div class="w-20 h-20 rounded-full overflow-hidden ring-2 ring-yellow-400/60 shadow-md">
+      <img src="${item.foodImg}" alt="${item.foodTitle}" class="w-full h-full object-cover"/>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center gap-1">
+    <!-- Fixed title box -->
+    <div class="max-w-[160px] overflow-hidden">
+      <h1 class="text-lg font-semibold text-gray-800 drop-shadow-sm truncate whitespace-nowrap">
+        ${item.foodTitle}
+      </h1>
+    </div>
+
+    <p class="text-lg font-bold text-emerald-600 drop-shadow">
+      ${(item.quantity * item.foodPrice).toFixed(2)} BDT
+    </p>
+
+    <div class="flex items-center gap-2 mt-2">
+      <button onclick="decreaseQuantity(${item.id})" 
+              class="w-7 h-7 flex justify-center items-center 
+                     bg-white/40 text-gray-700 font-bold 
+                     rounded-full hover:bg-white/60 transition">
+        -
+      </button>
+      <span class="font-semibold text-gray-800 drop-shadow">${item.quantity}</span>
+      <button onclick="increaseQuantity(${item.id})" 
+              class="w-7 h-7 flex justify-center items-center 
+                     bg-white/40 text-gray-700 font-bold 
+                     rounded-full hover:bg-white/60 transition">
+        +
+      </button>
+    </div>
+  </div>
+
+  <button onclick="removeCart(${item.id})" 
+          class="absolute top-3 right-3 w-9 h-9 flex justify-center items-center 
+                 bg-gradient-to-br from-red-500/80 to-red-600/80 
+                 hover:scale-110 transition-transform 
+                 text-white rounded-full shadow-xl backdrop-blur-sm">
+    <i class="fa-solid fa-xmark text-sm"></i>
+  </button>
+</div>
     `;
-
     cartContainer.append(newItem);
   }
+};
+
+
+
+const increaseQuantity = (id) => {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.quantity += 1;
+
+  total = cart.reduce((sum, i) => sum + i.foodPrice * i.quantity, 0);
+  displayCart(cart);
+  displayTotal(total);
+};
+
+const decreaseQuantity = (id) => {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+
+  if (item.quantity > 1) {
+    item.quantity -= 1;
+  } else {
+    cart = cart.filter(i => i.id !== id);
+  }
+
+  total = cart.reduce((sum, i) => sum + i.foodPrice * i.quantity, 0);
+  displayCart(cart);
+  displayTotal(total);
+};
+
+
+
+
+const removeCart = (id) => {
+  const item = cart.find(item => item.id === id);
+  if (!item) return;
+
+  if (item.quantity > 1) {
+    item.quantity -= 1;
+  } else {
+    cart = cart.filter(item => item.id !== id);
+  }
+
+  total = cart.reduce((sum, item) => sum + item.foodPrice * item.quantity, 0);
+
+  displayCart(cart);
+  displayTotal(total);
 };
