@@ -33,45 +33,21 @@ const handelLOad = (id) => {
   const url = `https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`;
 
   document.querySelectorAll(".btn-category").forEach(btn => {
-    btn.classList.remove(
-      "active",
-      "bg-gradient-to-r",
-      "from-yellow-400",
-      "to-orange-500",
-      "text-white",
-      "shadow-lg",
-      "scale-105"
-    );
-    btn.classList.add(
-      "bg-white",
-      "text-gray-700",
-      "hover:bg-gray-100",
-      "transition",
-      "duration-300",
-      "ease-in-out"
-    );
+    btn.classList.remove("active", "bg-gradient-to-r", "from-yellow-400", "to-orange-500", "text-white", "shadow-lg", "scale-105");
+    btn.classList.add("bg-white", "text-gray-700", "hover:bg-gray-100", "transition", "duration-300", "ease-in-out");
   });
 
   const currentBtn = document.getElementById(`btn-ctg-${id}`);
   if (currentBtn) {
-    currentBtn.classList.add(
-      "active",
-      "bg-gradient-to-r",
-      "from-yellow-400",
-      "to-orange-500",
-      "text-white",
-      "shadow-lg",
-      "scale-105",
-      "border-0"
-    );
+    currentBtn.classList.add("active", "bg-gradient-to-r", "from-yellow-400", "to-orange-500", "text-white", "shadow-lg", "scale-105", "border-0");
     currentBtn.classList.remove("bg-white", "hover:bg-gray-100", "text-gray-700");
-  }
+  };
 
 
   fetch(url)
     .then(res => res.json())
     .then(data => displayFoods(data.foods));
-}
+};
 
 const loadRandomData = () => {
   const url = " https://taxi-kitchen-api.vercel.app/api/v1/foods/random";
@@ -79,7 +55,7 @@ const loadRandomData = () => {
   fetch(url)
     .then(res => res.json())
     .then(data => displayFoods(data.foods));
-}
+};
 
 
 const displayFoods = (foods) => {
@@ -123,7 +99,7 @@ const displayFoods = (foods) => {
 };
 
 
-/* Modal Open  */
+// * Modal Open 
 
 const loadFoodDetails = (id) => {
   const url = `https://taxi-kitchen-api.vercel.app/api/v1/foods/${id}`;
@@ -173,7 +149,7 @@ const displayDetails = (food) => {
 };
 
 
-/* Time update */
+// * Time update
 
 const updateCurrentDateTime = () => {
   const now = new Date();
