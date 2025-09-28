@@ -7,6 +7,9 @@ const loadCategories = () => {
     .then(data => displayCategories(data.categories));
 };
 
+let cart = [];
+let total = 0;
+
 const displayCategories = (categories) => {
 
   const cartCategories = document.getElementById("category-container");
@@ -30,6 +33,11 @@ const displayCategories = (categories) => {
 /////////////////////
 
 const handelLOad = (id) => {
+
+  document.getElementById("loading-spinner").classList.remove("hidden");
+  document.getElementById("food-container").classList.add("hidden");
+
+
   const url = `https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`;
 
   document.querySelectorAll(".btn-category").forEach(btn => {
@@ -69,21 +77,21 @@ const displayFoods = (foods) => {
   <img onclick="loadFoodDetails(${food.id})" 
     src="${food.foodImg}" 
     alt="${food.title}" 
-    class="w-full h-48 rounded-xl object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
+    class="w-full h-48 rounded-xl object-cover cursor-pointer transition-transform duration-500 hover:scale-105 food-img"
   />
   
   <div class="flex flex-col gap-3 mt-4">
-    <h1 class="text-lg md:text-xl font-bold text-gray-100 truncate">${food.title}</h1>
+    <h1 class="text-lg md:text-xl font-bold text-gray-100 truncate food-title">${food.title}</h1>
     
     <div class="inline-block bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-semibold w-fit">
       ${food.category}
     </div>
     
     <h2 class="text-yellow-400 font-semibold text-lg md:text-xl">
-      $<span class="price">${food.price}</span> BDT
+      $<span class="price food-price">${food.price}</span> BDT
     </h2>
     
-    <button class="btn btn-warning w-full mt-2 flex items-center gap-2 justify-center hover:scale-105 transition-transform duration-300">
+    <button onclick="addtoCart(this)" class="btn btn-warning w-full mt-2 flex items-center gap-2 justify-center hover:scale-105 transition-transform duration-300">
       <i class="fa-solid fa-square-plus"></i>
       Add This Item
     </button>
@@ -95,6 +103,8 @@ const displayFoods = (foods) => {
     foodsContainer.appendChild(foodCard);
 
   };
+  document.getElementById("loading-spinner").classList.add("hidden");
+  document.getElementById("food-container").classList.remove("hidden");
 
 };
 
@@ -174,3 +184,76 @@ setInterval(updateCurrentDateTime, 1000);
 
 loadCategories();
 loadRandomData();
+
+const addtoCart = (btn) => {
+  const card = btn.parentNode.parentNode;
+
+  const foodTitle = card.querySelector(".food-title").innerText;
+  const foodImg = card.querySelector(".food-img").src;
+  const foodPrice = card.querySelector(".food-price").innerText;
+
+  const foodPriceNum = Number(foodPrice);
+
+  // console.log(foodTitle, foodImg, foodPriceNum);
+
+  const selectedItem = {
+    id: card.length + 1,
+    quantity: 1,
+    foodTitle: foodTitle,
+    foodImg: foodImg,
+    foodPrice: foodPriceNum,
+  };
+
+  cart.push(selectedItem);
+
+  total = total + foodPriceNum;
+
+  displayCart(cart)
+  displayTotal(total);
+}
+
+const displayTotal = (val) => {
+  document.getElementById("cart-total").innerHTML = val;
+};
+
+
+
+
+const displayCart = (cart) => {
+  const cartContainer = document.getElementById("cart-container");
+  cartContainer.innerHTML = "";
+  for (let item of cart) {
+    const newItem = document.createElement("div");
+    newItem.innerHTML = `
+     <div class="p-1 bg-white flex gap-3 shadow rounded-xl relative">
+            <div class="img">
+              <span class="hidden cart-id">${item.id}</span>
+              <img
+                src="${item.foodImg}"
+                alt=""
+                class="w-[50px] rounded-xl h-[50px] object-cover"
+              />
+            </div>
+            <div class="flex-1">
+              <h1  class="text-xs font-bold food-title">
+                ${item.foodTitle}
+              </h1>
+
+              <div class="">
+                <h2 class="text-yellow-600 font-semibold">
+                 ${item.quantity} x $ <span class="item-price">${item.foodPrice}</span> BDT
+                </h2>
+                
+              </div>
+            </div>
+            <div onclick="removeCart(this)"
+              class="w-6 h-6 flex justify-center items-center bg-red-600 rounded-full absolute -top-1 -right-1 text-white cursor-pointer"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+          </div>
+    `;
+
+    cartContainer.append(newItem);
+  }
+};
