@@ -1,103 +1,94 @@
 const loadCategories = () => {
-    const url = " https://taxi-kitchen-api.vercel.app/api/v1/categories";
+  const url = " https://taxi-kitchen-api.vercel.app/api/v1/categories";
 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayCategories(data.categories));
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => displayCategories(data.categories));
 };
 
+const displayCategories = (categories) => {
+
+  const cartCategories = document.getElementById("category-container");
+  cartCategories.innerHTML = "";
+
+  for (let category of categories) {
+    const categoriesCard = document.createElement('div');
+    categoriesCard.innerHTML = `
+         <button id="btn-ctg-${category.id}" onclick="handelLOad(${category.id})"
+          class="btn btn-block bg-white hover:bg-gray-300 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-6 btn-category">
+          <img src=${category.categoryImg} alt=""
+            class="w-10 h-10 object-cover rounded-full border border-gray-200 shadow" />
+          <span class="font-semibold text-gray-700">${category.categoryName}</span>
+        </button>
+        `;
+
+    cartCategories.appendChild(categoriesCard);
+  };
+};
+
+/////////////////////
+
 const handelLOad = (id) => {
-    const url = `https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayFoods(data.foods));
+  const url = `https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`;
+
+  document.querySelectorAll(".btn-category").forEach(btn => {
+    btn.classList.remove(
+      "active",
+      "bg-gradient-to-r",
+      "from-yellow-400",
+      "to-orange-500",
+      "text-white",
+      "shadow-lg",
+      "scale-105"
+    );
+    btn.classList.add(
+      "bg-white",
+      "text-gray-700",
+      "hover:bg-gray-100",
+      "transition",
+      "duration-300",
+      "ease-in-out"
+    );
+  });
+
+  const currentBtn = document.getElementById(`btn-ctg-${id}`);
+  if (currentBtn) {
+    currentBtn.classList.add(
+      "active",
+      "bg-gradient-to-r",
+      "from-yellow-400",
+      "to-orange-500",
+      "text-white",
+      "shadow-lg",
+      "scale-105",
+      "border-0"
+    );
+    currentBtn.classList.remove("bg-white", "hover:bg-gray-100", "text-gray-700");
+  }
+
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => displayFoods(data.foods));
 }
 
 const loadRandomData = () => {
-    const url = " https://taxi-kitchen-api.vercel.app/api/v1/foods/random";
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayFoods(data.foods));
+  const url = " https://taxi-kitchen-api.vercel.app/api/v1/foods/random";
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => displayFoods(data.foods));
 }
-
-/* Modal Open  */
-
-const loadFoodDetails = (id) => {
-    const url = `https://taxi-kitchen-api.vercel.app/api/v1/foods/${id}`;
-
-    fetch(url)
-        .then((res) => res.json())
-        .then((data) => displayDetails(data.details));
-};
-
-const displayDetails = (food) => {
-    const detailsContainer = document.getElementById("details_container");
-    detailsContainer.innerHTML = "";
-
-    const ecode = food.video.split("v=")[1] || food.video.split("/").pop();
-    console.log("Video code:", ecode);
-
-    detailsContainer.innerHTML = `
-   <img src="${food.foodImg}" 
-       alt="${food.title}" 
-       class="w-full h-64 object-cover rounded-xl mb-6 shadow-md">
-  
-  <h2 class="text-3xl font-bold text-white mb-2">
-    ${food.title}
-  </h2>
-  
-  <p class="text-white mb-4">
-    Category: <span class="font-semibold">${food.category}</span> | 
-    Origin: <span class="font-semibold">${food.area}</span>
-  </p>
-  
-  <p class="text-xl font-semibold text-indigo-600 mb-6">
-    Price: $${food.price}
-  </p>
-
-  <div class="aspect-video rounded-xl overflow-hidden shadow-lg mb-6">
-    <iframe 
-      src="https://www.youtube.com/embed/${food.video.split("v=")[1]}"
-      class="w-full h-full"
-      allowfullscreen>
-    </iframe>
-  </div>
-  `;
-
-    document.getElementById("my_modal_5").showModal();
-};
-
-
-/* Time update */
-
-const updateCurrentDateTime = () => {
-    const now = new Date();
-
-    const formatted = now.toLocaleDateString('en-US', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-        }) + " - " +
-
-        now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-
-    document.getElementById('currentDateTime').textContent = `Viewed On: ${formatted}`;
-};
-
-updateCurrentDateTime();
-setInterval(updateCurrentDateTime, 1000);
 
 
 const displayFoods = (foods) => {
-    const foodsContainer = document.getElementById("food-container");
-    foodsContainer.innerHTML = "";
+  const foodsContainer = document.getElementById("food-container");
+  foodsContainer.innerHTML = "";
 
-    for (let food of foods) {
-        const foodCard = document.createElement('div');
-        foodCard.innerHTML = `
+  for (let food of foods) {
+    const foodCard = document.createElement('div');
+    foodCard.innerHTML = `
               <div class="p-5 rounded-2xl shadow-2xl backdrop-blur-sm bg-black/70 border border-gray-800 transition-transform transform hover:scale-105 duration-300">
   <img onclick="loadFoodDetails(${food.id})" 
     src="${food.foodImg}" 
@@ -125,32 +116,85 @@ const displayFoods = (foods) => {
 
         `;
 
-        foodsContainer.appendChild(foodCard);
+    foodsContainer.appendChild(foodCard);
 
-    }
-
-}
-
-const displayCategories = (categories) => {
-
-    const cartCategories = document.getElementById("category-container");
-    cartCategories.innerHTML = "";
-
-    for (let category of categories) {
-        const categoriesCard = document.createElement('div');
-        categoriesCard.innerHTML = `
-         <button onclick="handelLOad(${category.id})"
-          class="btn btn-block bg-white hover:bg-gray-300 transition shadow-sm flex items-center gap-3 justify-start rounded-xl px-4 py-6">
-          <img src=${category.categoryImg} alt=""
-            class="w-10 h-10 object-cover rounded-full border border-gray-200 shadow" />
-          <span class="font-semibold text-gray-700">${category.categoryName}</span>
-        </button>
-        `;
-
-        cartCategories.appendChild(categoriesCard);
-    };
+  };
 
 };
+
+
+/* Modal Open  */
+
+const loadFoodDetails = (id) => {
+  const url = `https://taxi-kitchen-api.vercel.app/api/v1/foods/${id}`;
+
+
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayDetails(data.details));
+};
+
+const displayDetails = (food) => {
+  const detailsContainer = document.getElementById("details_container");
+  detailsContainer.innerHTML = "";
+
+  const ecode = food.video.split("v=")[1] || food.video.split("/").pop();
+  console.log("Video code:", ecode);
+
+  detailsContainer.innerHTML = `
+   <img src="${food.foodImg}" 
+       alt="${food.title}" 
+       class="w-full h-64 object-cover rounded-xl mb-6 shadow-md">
+  
+  <h2 class="text-3xl font-bold text-white mb-2">
+    ${food.title}
+  </h2>
+  
+  <p class="text-white mb-4">
+    Category: <span class="font-semibold">${food.category}</span> | 
+    Origin: <span class="font-semibold">${food.area}</span>
+  </p>
+  
+  <p class="text-xl font-semibold text-indigo-600 mb-6">
+    Price: $${food.price}
+  </p>
+
+  <div class="aspect-video rounded-xl overflow-hidden shadow-lg mb-6">
+    <iframe 
+      src="https://www.youtube.com/embed/${food.video.split("v=")[1]}"
+      class="w-full h-full"
+      allowfullscreen>
+    </iframe>
+  </div>
+  `;
+
+  document.getElementById("my_modal_5").showModal();
+};
+
+
+/* Time update */
+
+const updateCurrentDateTime = () => {
+  const now = new Date();
+
+  const formatted = now.toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    }) + " - " +
+
+    now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+  document.getElementById('currentDateTime').textContent = `Viewed On: ${formatted}`;
+};
+
+updateCurrentDateTime();
+setInterval(updateCurrentDateTime, 1000);
+
 
 loadCategories();
 loadRandomData();
