@@ -210,7 +210,11 @@ const addtoCart = (btn) => {
 
   displayCart(cart);
   displayTotal(total);
+
+  const msg = document.getElementById("order-message");
+  msg.classList.add("hidden");
 };
+
 
 
 
@@ -324,4 +328,36 @@ const removeCart = (id) => {
 
   displayCart(cart);
   displayTotal(total);
+};
+
+
+// * Confirm Order Section
+
+const confirmOrder = () => {
+  const msg = document.getElementById("order-message");
+
+  if (cart.length === 0) {
+    msg.textContent = "❌ No items in cart!";
+    msg.classList.remove("hidden", "text-green-600");
+    msg.classList.add("text-red-600");
+
+    setTimeout(() => {
+      msg.classList.add("hidden");
+    }, 2500);
+
+    return;
+  }
+
+  msg.textContent = "✅ Your order has been confirmed! The restaurant is preparing your food 🍳🍲";
+  msg.classList.remove("hidden", "text-red-600");
+  msg.classList.add("text-green-600");
+
+  cart = [];
+  total = 0;
+  displayCart(cart);
+  displayTotal(total);
+
+  setTimeout(() => {
+    msg.classList.add("hidden");
+  }, 2500);
 };

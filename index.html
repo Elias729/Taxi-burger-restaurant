@@ -104,10 +104,31 @@
 
       </div>
 
-      <div class="bg-yellow-500 mt-8 rounded-xl">
-        <h2 class="p-4 text-white font-bold text-lg text-center">
-          Total: $<span id="cart-total">0</span> BDT
+      <div class="mt-8 rounded-3xl p-6 shadow-2xl 
+            bg-white/80 backdrop-blur-lg border border-gray-200/50 
+            hover:shadow-yellow-400/50 transition-all duration-500 transform hover:-translate-y-1">
+
+        <!-- Total Section -->
+        <h2 class="text-2xl font-extrabold text-gray-800 flex justify-between items-center">
+          <span>Total:</span>
+          <span id="cart-total" class="text-yellow-600 drop-shadow-lg">0</span>
+          <span class="text-sm text-gray-600 font-semibold">BDT</span>
         </h2>
+
+        <!-- Divider -->
+        <div class="my-4 h-[1px] bg-gray-300/50"></div>
+
+        <!-- Confirm Order Button -->
+        <button onclick="confirmOrder()" class="w-full py-3 rounded-xl bg-gradient-to-r from-yellow-500 via-yellow-600 to-orange-500 
+           text-white font-bold text-lg shadow-md hover:shadow-xl hover:scale-105 active:scale-95 
+           transition-all duration-300 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-check"></i>
+          Confirm Order
+        </button>
+
+        <!-- Order Message -->
+        <p id="order-message" class="fade text-center text-base md:text-lg font-semibold mt-4 hidden">
+        </p>
       </div>
     </section>
 
